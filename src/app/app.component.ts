@@ -31,8 +31,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  json: any;
-  url: string = "";
+  url_endPoint: string = "";
   @ViewChild('modalAdd') modalAdd: any;
   closeResultAdd: any;
 
@@ -70,10 +69,10 @@ export class AppComponent implements OnInit {
   borrarTarea(i: any): void {
     var res = confirm("¿Desea eliminar el elemento seleccionado?");
     if (res) {
-      this.url = "http://localhost:3000/tasks/"
-      this.url += this.tasks[i].id;
-      console.log(this.url);
-      this.apiService.deleteTask(this.url).subscribe((data: any) => {
+      this.url_endPoint = "http://localhost:3000/tasks/"
+      this.url_endPoint += this.tasks[i].id;
+      console.log(this.url_endPoint);
+      this.apiService.deleteTask(this.url_endPoint).subscribe((data: any) => {
         console.log(data)
         this.refreshTasks();
       });
@@ -99,10 +98,10 @@ export class AppComponent implements OnInit {
   actualizarTarea(): void {
     if (this.currentTask.title != "") {    
       let i = this.valor;
-      this.url = "http://localhost:3000/tasks/"
-      this.url += this.tasks[i].id;
+      this.url_endPoint = "http://localhost:3000/tasks/"
+      this.url_endPoint += this.tasks[i].id;
 
-      this.apiService.updateTask(this.url,this.currentTask).subscribe(data => {
+      this.apiService.updateTask(this.url_endPoint,this.currentTask).subscribe(data => {
         console.log(data)
         this.refreshTasks();
       });     
@@ -119,11 +118,11 @@ export class AppComponent implements OnInit {
   completarTarea(i: any): void {    
     this.currentTask.title = this.tasks[i].title;
     this.currentTask.detail = this.tasks[i].detail;
-    this.url = "http://localhost:3000/tasks/"
-    this.url += this.tasks[i].id; 
-    this.url += "?status=completed";   
+    this.url_endPoint = "http://localhost:3000/tasks/"
+    this.url_endPoint += this.tasks[i].id; 
+    this.url_endPoint += "?status=completed";   
     
-    this.apiService.updateStatusTask(this.url,this.currentTask).subscribe(data => {
+    this.apiService.updateStatusTask(this.url_endPoint,this.currentTask).subscribe(data => {
       console.log(data)
       this.refreshTasks();
     });  
@@ -137,11 +136,11 @@ export class AppComponent implements OnInit {
   reiniciarTarea(i: any): void {
     this.currentTask.title = this.tasks[i].title;
     this.currentTask.detail = this.tasks[i].detail;
-    this.url = "http://localhost:3000/tasks/"
-    this.url += this.tasks[i].id; 
-    this.url += "?status=pending";   
+    this.url_endPoint = "http://localhost:3000/tasks/"
+    this.url_endPoint += this.tasks[i].id; 
+    this.url_endPoint += "?status=pending";   
     
-    this.apiService.updateStatusTask(this.url,this.currentTask).subscribe(data => {
+    this.apiService.updateStatusTask(this.url_endPoint,this.currentTask).subscribe(data => {
       console.log(data)
       this.refreshTasks();
     });  
