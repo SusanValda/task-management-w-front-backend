@@ -1,0 +1,141 @@
+<!-- Toolbar -->
+<div class="toolbar align-items-center justify-content-center" role=" banner ">
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-4">
+                <img alt="Logo" src="../assets/logoB.png " />
+            </div>
+            <div class="col-8">
+                <h1 class="m-5">{{title}}</h1>
+            </div>
+            <div class="spacer "></div>
+        </div>
+    </div>
+</div>
+
+<body>
+    <ng-template #modalAdd let-modal>
+        <div class="modal-header ">
+            <h5 class="modal-title ">Agregar tarea</h5>
+        </div>
+        <div class="modal-body ">
+            <form name="formTask" #formTask="ngForm" (ngSubmit)="agregarTarea(formTask)">
+                <div class="form-group mb-3 ">
+                    <label for="title " class="form-label">Titulo</label>
+                    <input type="text " class="form-control" id="title " name="title" [(ngModel)]="this.currentTask.title">
+                    <div *ngIf="this.currentTask.title==''">
+                        <p>*Campo requerido</p>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 ">
+                    <label for="detail" class="form-label">Detalle (opcional)</label>
+                    <input type="text" class="form-control" id="detail" name="detail" [(ngModel)]="this.currentTask.detail">
+                </div>
+
+                <div class="form-group ">
+                    <div class="row justify-content-between ">
+                        <div class="col-3 ">
+                            <button type="button" class="btn btn-secondary " data-bs-dismiss="modal " id="btnClose" #btnClose (click)="modal.dismiss('Adición cancelada')">Cancelar</button>
+                        </div>
+                        <div class=" col-3 ">
+                            <button type="submit " class="btn btn-success ml-5 " (click)="modal.close()" *ngIf="this.currentTask.title!=''">Guardar</button>
+                            <button class="btn btn-success ml-5 " *ngIf="this.currentTask.title==''" disabled>Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class=" modal-footer "></div>
+    </ng-template>
+
+    <ng-template id="accept " #modalEdit let-modal>
+        <div class="modal-header ">
+            <h5 class="modal-title ">Editar tarea</h5>
+        </div>
+        <div class="modal-body ">
+            <form name="formTareaEdit " #formTareaEdit="ngForm" (ngSubmit)="actualizarTarea()">
+                <div class="form-group mb-3 ">
+                    <label for="title " class="form-label">Titulo</label>
+                    <input type="text " class="form-control" id="title " name="title" [(ngModel)]="this.currentTask.title">
+                    <div *ngIf="this.currentTask.title==''">
+                        <p>*Campo requerido</p>
+                    </div>
+                </div>
+
+                <div class="form-group mb-3 ">
+                    <label for="detail" class="form-label">Detalle (opcional)</label>
+                    <input type="text" class="form-control" id="detail" name="detail" [(ngModel)]="this.currentTask.detail">
+                </div>
+
+                <div class="form-group ">
+                    <div class="row justify-content-between ">
+                        <div class="col-3 ">
+                            <button type="button" class="btn btn-secondary " data-bs-dismiss="modal " id="btnClose" #btnClose (click)="modal.dismiss('Actualización cancelada')">Cancelar</button>
+                        </div>
+                        <div class=" col-3 ">
+                            <button type="submit " class="btn btn-success ml-5 " (click)="modal.close()" *ngIf="this.currentTask.title!=''">Actualizar</button>
+                            <button type="submit " class="btn btn-success ml-5 " *ngIf="this.currentTask.title==''" disabled>Actualizar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class=" modal-footer "></div>
+    </ng-template>
+
+    <div class="container ">
+        <div class="form-row justify-content-center mt-4 ">
+            <button type="button " class="btn btn-primary text-center " data-toggle="modal " data-target="#modalAdd " (click)="abrirTarea() ">
+                <h5 class=" p-1 m-0 ">Agregar tarea</h5>
+            </button>
+        </div>
+    </div>
+
+    <div class="container ">
+        <table class="table table-hover mt-4 ">
+            <thead>
+                <tr></tr>
+            </thead>
+
+            <tbody *ngIf="tasks.length>0">
+                <tr *ngFor="let task of tasks; let i=index ">
+                    <td class="ancho-tarea">
+                        <h4>{{task.title}}</h4>
+                        <h6>{{task.detail}}</h6>
+                    </td>
+
+                    <td *ngIf="task.status=='pending'" class="ancho-opciones">
+                        <a (click)="completarTarea(i)" class="btn btn-info m-2">Completar</a>
+                        <a (click)="editarTarea(i)" class="btn btn-warning m-2">Editar</a>
+                        <a (click)="borrarTarea(i)" class="btn btn-danger m-2">Eliminar</a>
+                    </td>
+
+                    <td *ngIf="task.status=='completed'" class="ancho-opciones">
+                        <h3 class="p-2">Completado!
+                            <button class="botonCompletado" (click)="reiniciarTarea(i)">
+                                <svg xmlns="http://www.w3.org/2000/svg " width="32 "
+                                    height="32" fill="currentColor" class="bi bi-arrow-counterclockwise"
+                                    viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+                                    <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+                                </svg>
+                            </button>
+                        </h3>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tbody *ngIf="tasks.length==0">
+                <h2 class=" p-3 ">Usted no tiene tareas pendientes.
+                    <svg xmlns="http://www.w3.org/2000/svg " width="48 " height=" 48 " fill="currentColor " class="bi bi-emoji-laughing " viewBox="0 0 16 16 ">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M12.331 9.5a1 1 0 0 1 0 1A4.998 4.998 0 0 1 8 13a4.998 4.998 0 0 1-4.33-2.5A1 1 0 0 1 4.535 9h6.93a1 1 0 0 1 .866.5zM7 6.5c0 .828-.448 0-1 0s-1 .828-1 0S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 0-1 0s-1 .828-1 0S9.448 5 10 5s1 .672 1 1.5z" />
+                    </svg>
+                </h2>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<router-outlet></router-outlet>
