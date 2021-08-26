@@ -112,8 +112,6 @@ export class AppComponent implements OnInit {
         detail: ''
       };
     }
-
-    
   }
 
   completarTarea(i: any): void {    
