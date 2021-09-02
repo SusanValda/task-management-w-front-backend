@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row align-items-center justify-content-center">
             <div class="col-4">
-                <img alt="Logo" src="../assets/logoB.png " />
+                <img alt="Logo" src="../assets/logoB.png" />
             </div>
             <div class="col-8">
                 <h1 class="m-5">{{title}}</h1>
@@ -35,7 +35,7 @@
                 <div class="form-group ">
                     <div class="row justify-content-between ">
                         <div class="col-3 ">
-                            <button type="button" class="btn btn-secondary " data-bs-dismiss="modal " id="btnClose" #btnClose (click)="modal.dismiss('Adición cancelada')">Cancelar</button>
+                            <button type="button" class="btn btn-secondary " data-bs-dismiss="modal " id="btnClose" #btnClose (click)="modal.dismiss('Add canceled.')">Cancelar</button>
                         </div>
                         <div class=" col-3 ">
                             <button type="submit " class="btn btn-success ml-5 " (click)="modal.close()" *ngIf="this.currentTask.title!=''">Guardar</button>
@@ -70,7 +70,7 @@
                 <div class="form-group ">
                     <div class="row justify-content-between ">
                         <div class="col-3 ">
-                            <button type="button" class="btn btn-secondary " data-bs-dismiss="modal " id="btnClose" #btnClose (click)="modal.dismiss('Actualización cancelada')">Cancelar</button>
+                            <button type="button" class="btn btn-secondary " data-bs-dismiss="modal " id="btnClose" #btnClose (click)="modal.dismiss('Update canceled.')">Cancelar</button>
                         </div>
                         <div class=" col-3 ">
                             <button type="submit " class="btn btn-success ml-5 " (click)="modal.close()" *ngIf="this.currentTask.title!=''">Actualizar</button>
