@@ -1,7 +1,6 @@
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { ApiService } from './api.service';
 
 @Component({
@@ -18,14 +17,15 @@ export class AppComponent implements OnInit {
     detail: ''
   }
 
-  constructor(public modal: NgbModal, public modal2: NgbModal, private http: HttpClient,private apiService:ApiService) {}
+  constructor(public modal: NgbModal, public modal2: NgbModal,private apiService:ApiService) {}
 
   ngOnInit() {
     this.refreshTasks();
   }
 
   refreshTasks() {
-    this.apiService.getTasks().subscribe((dataTask: any) => {
+    this.url_endPoint = "http://localhost:3000/tasks"
+    this.apiService.getTasks(this.url_endPoint).subscribe((dataTask: any) => {
       console.log(dataTask);
       this.tasks = dataTask;
     });
@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
   @ViewChild('modalAdd') modalAdd: any;
   closeResultAdd: any;
 
-  abrirTarea(): void {
+  openAddTask(): void {
     this.modal.open(this.modalAdd).result.then((result: any) => {
       this.closeResultAdd = `Closed with: ${result}`;
     }, (reason: any) => {
@@ -48,13 +48,15 @@ export class AppComponent implements OnInit {
     };
   }
 
-  agregarTarea(formTask: NgForm): void {
+  addTask(formTask: NgForm): void {
+    this.url_endPoint = "http://localhost:3000/tasks"
+
     this.currentTask = {
       title: formTask.value.title,
       detail: formTask.value.detail
     };
 
-    this.apiService.addTask(this.currentTask).subscribe((data: any) => {
+    this.apiService.addTask(this.url_endPoint,this.currentTask).subscribe((data: any) => {
       console.log(data)
       this.refreshTasks();
     });
@@ -66,7 +68,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  borrarTarea(i: any): void {
+  deleteTask(i: any): void {
     var res = confirm("¿Desea eliminar el elemento seleccionado?");
     if (res) {
       this.url_endPoint = "http://localhost:3000/tasks/"
@@ -83,7 +85,7 @@ export class AppComponent implements OnInit {
   @ViewChild('modalEdit') modalEdit: any;
   closeResult: any;
 
-  editarTarea(i: any): void {
+  openEditTask(i: any): void {
     this.modal2.open(this.modalEdit).result.then((result: any) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason: any) => {
@@ -95,7 +97,7 @@ export class AppComponent implements OnInit {
     this.valor = i;
   }
 
-  actualizarTarea(): void {
+  updateTask(): void {
     if (this.currentTask.title != "") {    
       let i = this.valor;
       this.url_endPoint = "http://localhost:3000/tasks/"
@@ -113,7 +115,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  completarTarea(i: any): void {    
+  completeTask(i: any): void {    
     this.currentTask.title = this.tasks[i].title;
     this.currentTask.detail = this.tasks[i].detail;
     this.url_endPoint = "http://localhost:3000/tasks/"
@@ -131,7 +133,7 @@ export class AppComponent implements OnInit {
     };
   }
 
-  reiniciarTarea(i: any): void {
+  restartTask (i: any): void {
     this.currentTask.title = this.tasks[i].title;
     this.currentTask.detail = this.tasks[i].detail;
     this.url_endPoint = "http://localhost:3000/tasks/"

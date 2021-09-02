@@ -1,38 +1,32 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
  
 @Injectable({providedIn:'root'})
 export class ApiService { 
   constructor(private http: HttpClient) {}
  
-  getTasks(): Observable<any> {
-    return this.http.get("http://localhost:3000/tasks")
+  getTasks(url_endPoint:string) {
+    return this.http.get(url_endPoint)
   }
 
-  addTask(task: any): Observable<any> {
+  addTask(url_endPoint:string, task: any){
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(task);
-    console.log(body)
-    return this.http.post("http://localhost:3000/tasks", body, {'headers': headers, responseType: 'text' })
+    return this.http.post(url_endPoint, body, {'headers': headers, responseType: 'text' })
   }
 
-  updateTask(url_base:string, task: any){
+  updateTask(url_endPoint:string, task: any){
     const headers = { 'content-type': 'application/json' }
     const body = JSON.stringify(task);
-
-    return this.http.put(url_base, body, {'headers': headers,responseType: 'text' })
+    return this.http.put(url_endPoint, body, {'headers': headers,responseType: 'text' })
   }
 
-  deleteTask(url_base:string){
-    const headers = { 'content-type': 'application/json' }
-    return this.http.delete(url_base,{responseType: 'text'})
+  deleteTask(url_endPoint:string){
+    return this.http.delete(url_endPoint,{responseType: 'text'})
   }
 
-  updateStatusTask(url_base:string, task: any){
-    const headers = { 'content-type': 'application/json' }
+  updateStatusTask(url_endPoint:string, task: any){
     const body = JSON.stringify(task);
-
-    return this.http.put(url_base,body,{responseType:'text'})
+    return this.http.put(url_endPoint,body,{responseType:'text'})
   } 
 }
