@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+        <img src="../../assets/logoB.png" class="d-inline-block align-top" alt="">
+        <button class="navbar-toggler collapsed custom-toggler" type="button" data-toggle="collapse" data-target="#navbarTasks" aria-controls="navbarTasks" aria-expanded="false" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="row-fluid collapse navbar-collapse" id="navbarTasks" [ngbCollapse]="isCollapsed">
+            <div class="centrado col-12">
+                <h1 class="navbar-brand" style="font-size: 42px; color:white;" href="#">
+                    {{title}}
+                </h1>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<body>
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="https://mdbootstrap.com/img/Photos/new-templates/bootstrap-login-form/draw2.png" class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form name="formUser" #formUser="ngForm" (ngSubmit)="authUser(formUser)">
+                    <!-- User input -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form_user">Usuario</label>
+                        <input type="text" class="form-control form-control-lg" placeholder="Ingrese su nombre de usuario" id="user" name="user" [(ngModel)]="this.currentUser.user_name" />
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-3">
+                        <label class="form-label" for="form_pass">Contraseña</label>
+                        <input type="password" class="form-control form-control-lg" placeholder="Ingrese su contraseña" id="pass" name="pass" [(ngModel)]="this.currentUser.user_pass" />
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2 justify-content-center">
+                        <button type="submit" class="btn btn-primary btn-lg" *ngIf="this.currentUser.user_pass=='' || this.currentUser.user_name==''" style="padding-left: 2.5rem; padding-right: 2.5rem;" disabled>Iniciar sesión</button>
+                        <button type="submit" class="btn btn-primary btn-lg" *ngIf="this.currentUser.user_pass!='' && this.currentUser.user_name!=''" style="padding-left: 2.5rem; padding-right: 2.5rem;">Iniciar sesión</button>
+                        <h3 class="small fw-bold mt-2 pt-1 mb-0">¿No tienes una cuenta?
+                            <button type="button" (click)="register()" class="btn btn-link ">Regístrate</button>
+                        </h3>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <ff-alerts></ff-alerts>
+</body>

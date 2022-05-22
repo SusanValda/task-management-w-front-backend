@@ -1,7 +1,7 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
     "cli": {
-      "analytics": "156481f3-e046-407d-82ae-ff52ea205286"
+        "analytics": "156481f3-e046-407d-82ae-ff52ea205286"
     },
     "version": 1,
     "newProjectRoot": "projects",
@@ -32,12 +32,14 @@
                         "styles": [
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "src/styles.css",
-                            "./node_modules/bootstrap/dist/css/bootstrap.css"
+                            "node_modules/bootstrap/dist/css/bootstrap.css"
                         ],
                         "scripts": [
-                            "./node_modules/jquery/dist/jquery.js",
-                            "./node_modules/popper.js/dist/umd/popper.js",
-                            "./node_modules/bootstrap/dist/js/bootstrap.js"
+                            "node_modules/jquery/dist/jquery.min.js",
+                            "node_modules/jquery/dist/jquery.js",
+                            "node_modules/popper.js/dist/umd/popper.js",
+                            "node_modules/bootstrap/dist/js/bootstrap.js",
+                            "node_modules/bootstrap/dist/js/bootstrap.min.js"
                         ]
                     },
                     "configurations": {
